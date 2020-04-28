@@ -12,9 +12,9 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
-        <gen:DecimalEntry Grid.Row="0" labelVisibility="Visible" Resolution="0.01" Min="0" Max="100" Margin="5" Padding="5" x:Name="num">
+        <gen:DecimalEntry Grid.Row="0" labelVisibility="Visible" Resolution="1" Margin="5" Padding="5" x:Name="num">
             <gen:DecimalEntry.UnitList >
-                <gen:UnitMultiplier DisplayUnits="meter" Multiplier="1"/>
+                <gen:UnitMultiplier DisplayUnits="kilometer" Multiplier="1000"/>
             </gen:DecimalEntry.UnitList>
         </gen:DecimalEntry>
         <gen:IPInput Grid.Row="1" Address="192.168.1.1" Margin="5" Padding="5"/>

@@ -23,7 +23,7 @@ namespace WpfApp1
         public MainWindow()
         {
             InitializeComponent();
-            num.Value = 1;
+            num.Value = 1000000;
         }
     }
 }
