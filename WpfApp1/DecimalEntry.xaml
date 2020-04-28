@@ -1,0 +1,143 @@
+﻿<UserControl x:Class="Generic.DecimalEntry"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:Controls="clr-namespace:Generic"
+    MouseWheel="OnMouseWheel"
+    MouseDoubleClick="OnMouseDoubleClick" Name="nBox">
+    <UserControl.Resources>
+        <Style x:Key="PathNumericUpArrow"
+           TargetType="{x:Type Path}">
+            <Setter Property="Data"
+                Value="M1011,568.005l4,3.99h-8Z" />
+            <Setter Property="Width"
+                Value="8" />
+            <Setter Property="Stretch"
+                Value="Uniform" />
+        </Style>
+
+        <Style x:Key="PathNumericDownArrow"
+           TargetType="{x:Type Path}">
+            <Setter Property="Data"
+                Value="M4,4L0,0h8L4,4z" />
+            <Setter Property="Width"
+                Value="8" />
+            <Setter Property="Stretch"
+                Value="Uniform" />
+        </Style>
+    </UserControl.Resources>
+    <!-- 
+    ******************************************* PLEASE NOTE ***********************************************
+    This file is essentially a copy of NumericEntry.xaml.   Any changes in one file should be made in both!
+    *******************************************************************************************************
+    -->
+    <!-- make sure "outside" margins/padding (i.e. space between components and container) are
+         0 so the user of the control can easily line things up without knowing this controls
+         margins/padding -->
+    <Border Background="Transparent" BorderThickness="1.0" CornerRadius="4" Padding="0">
+        <Grid x:Name="mGrid" Margin="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <Label x:Name="mLabel" VerticalContentAlignment="Center" Grid.Column="0" Content="{Binding label, ElementName=nBox, Mode=TwoWay}" Visibility="{Binding labelVisibility, ElementName=nBox}"></Label>
+            <!-- The initial value here (0) must match the default declared in ValueProperty (0) -->
+            <Controls:DecimalTextBox x:Name="mEntryTextBox" Grid.Column="1" IsReadOnly="False" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"  ToolTip=" " ToolTipOpening="MinMaxToolTipToolTipOpening"
+               ContextMenu="{x:Null}" >
+                <Controls:DecimalTextBox.Style>
+                    <Style TargetType="{x:Type Controls:DecimalTextBox}" BasedOn="{StaticResource {x:Type TextBox}}"/>
+                </Controls:DecimalTextBox.Style>
+                0
+            </Controls:DecimalTextBox>
+       
+            <Button x:Name="mMinButton" Grid.Column="2" 
+                   
+                    FontSize="14" FontWeight="Bold" Padding="0"
+                    Click="OnMinButtonClick"
+                    Visibility="Collapsed">
+                <Rectangle x:Name="mMinButtonRect" Stretch="Fill" RenderTransformOrigin="0.5,0.5" 
+                       
+                       HorizontalAlignment="Stretch" VerticalAlignment="Stretch" />
+            </Button>
+            <RepeatButton x:Name="mDownBtn" Grid.Column="3" Delay="300" Interval="100" 
+                   
+                    Click="OnDownButtonClick"
+                    Visibility="Collapsed" >
+                <Rectangle x:Name="mDownButtonRect" Stretch="Fill" 
+                    
+                    RenderTransformOrigin="0.5,0.5"
+                    HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
+                    />
+            </RepeatButton>
+            <Button x:Name="mZeroButton" Grid.Column="4" 
+                 
+                FontSize="14" FontWeight="Bold" Padding="0"
+                Width="34" Click="OnZeroButtonClick"
+                    Visibility="Collapsed">
+                <Rectangle Stretch="Fill" RenderTransformOrigin="0.5,0.5" 
+                      
+                       Height="18" Width="18"
+                       HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
+                       />
+            </Button>
+            <RepeatButton x:Name="mUpBtn" Grid.Column="5" Delay="300" Interval="100" 
+            
+                   Click="OnUpButtonClick"
+                          Visibility="Collapsed">
+                <Rectangle x:Name="mUpButtonRect" Stretch="Fill" RenderTransformOrigin="0.5,0.5"  
+                       
+                       HorizontalAlignment="Stretch" VerticalAlignment="Stretch" />
+            </RepeatButton>
+            <Button x:Name="mMaxButton" Grid.Column="6" 
+       
+                 FontSize="14" FontWeight="Bold" Padding="0"
+                 Click="OnMaxButtonClick"
+                    Visibility="Collapsed">
+                <Rectangle x:Name="mMaxButtonRect" Stretch="Fill" RenderTransformOrigin="0.5,0.5" 
+                 
+                   HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+            </Button>
+            <Grid x:Name="mSmallButtons" Grid.Column="7" Margin="0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <RepeatButton x:Name="mSmallUpBtn" Grid.Row="0"
+					Delay="300" Interval="100" 
+	              VerticalAlignment="Stretch"
+	                Click="OnUpButtonClick" SizeChanged="OnSizeChanged" >
+                    <Path Name="incrementerArrow"
+                                      Style="{StaticResource PathNumericUpArrow}"
+                                      Fill="{Binding (TextElement.Foreground), RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ContentPresenter}}}"  />
+                    <!--<Viewbox Margin="0">
+                        <Rectangle x:Name="mSmallUpButtonRect" RenderTransformOrigin="0.5,0.5"  
+	                       Style="{DynamicResource SmallUpDownRectangleStyle}"
+	                       HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Fill="{DynamicResource UpArrowBrush}" />
+                    </Viewbox>-->
+                </RepeatButton>
+                <RepeatButton x:Name="mSmallDownBtn" Grid.Row="1"
+					Delay="300" Interval="100" 
+	                 VerticalAlignment="Stretch"
+	                Click="OnDownButtonClick" SizeChanged="OnSizeChanged">
+                    <Path Name="decrementerArrow"
+                                      Style="{StaticResource PathNumericDownArrow}"
+                                      Fill="{Binding (TextElement.Foreground), RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ContentPresenter}}}"  />
+                    <!--<Viewbox Margin="0">
+                        <Rectangle x:Name="mSmallDownButtonRect" RenderTransformOrigin="0.5,0.5"  
+	                       Style="{DynamicResource SmallUpDownRectangleStyle}"
+	                       HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Fill="{DynamicResource DownArrowBrush}"
+	                       />
+                    </Viewbox>-->
+                </RepeatButton>
+            </Grid>
+        </Grid>
+    </Border>
+</UserControl>
